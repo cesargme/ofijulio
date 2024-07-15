@@ -2,7 +2,7 @@ from util import audio_processing, gpt
 from pathlib import Path
 import FreeSimpleGUI as sg
 import os
-
+import shutil
 
 def seleccionar_archivo_mkv(func):
     def wrapper(*args, **kwargs):
@@ -36,4 +36,4 @@ def transcribir_reunión(ruta_mkv):
     audio_processing.convertir_mkv_a_mp3(ruta_mkv_str, "temp_audio.mp3")
     audio_processing.dividir_audio_en_chunks("temp_audio.mp3", duracion_minutos=10, carpeta_salida="reu")
     gpt.transcribir_y_unificar_chunks("reu",ruta_mkv.parent / (ruta_mkv.stem + ".txt") )
-    os.remove("reu")
+    shutil.rmtree("reu")
